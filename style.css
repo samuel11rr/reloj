@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+:root {
+  --warning-background: #ffcc6e;
+  --warning-color: #ff9800;
+  --danger-background: #fd7e75;
+  --danger-color: #ff5722;
+  --alert-background: #f44336;
+  --alert-color: #ab1a0f;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Anton', sans-serif;
+  font-size: 14rem;
+  transition: all 1s linear;
+}
+
+.wrapper.warning {
+  background: var(--warning-background);
+  color: white;
+  text-shadow: 2px 0 0 var(--warning-color), -2px 0 0 var(--warning-color), 0 2px 0 var(--warning-color), 0 -2px 0 var(--warning-color), 1px 1px var(--warning-color), -1px -1px 0 var(--warning-color), 1px -1px 0 var(--warning-color), -1px 1px 0 var(--warning-color);
+}
+
+.wrapper.danger {
+  background: var(--danger-background);
+  color: white;
+  text-shadow: 2px 0 0 var(--danger-color), -2px 0 0 var(--danger-color), 0 2px 0 var(--danger-color), 0 -2px 0 var(--danger-color), 1px 1px var(--danger-color), -1px -1px 0 var(--danger-color), 1px -1px 0 var(--danger-color), -1px 1px 0 var(--danger-color);
+}
+
+.wrapper.alert {
+  background: var(--danger-background);
+  color: white;
+  text-shadow: 2px 0 0 var(--alert-color), -2px 0 0 var(--alert-color), 0 2px 0 var(--alert-color), 0 -2px 0 var(--alert-color), 1px 1px var(--alert-color), -1px -1px 0 var(--alert-color), 1px -1px 0 var(--alert-color), -1px 1px 0 var(--alert-color);
+
+  animation: alert-bg 3s linear infinite;
+}
+
+@keyframes alert-bg {
+  0% { background: var(--danger-background); }
+  50% { background: var(--alert-background); }
+}
+
+.number {
+  width: 350px;
+  text-align: center;
+}
+
+.hidden{
+  display: none;
+}
+
+.intermitent {
+  opacity: 0;
+  animation: intermitent 2s linear infinite;
+}
+
+@keyframes intermitent {
+  from,
+  49.9% {
+    opacity: 0;
+  }
+  50%,
+  to {
+    opacity: 1;
+  }
+}
