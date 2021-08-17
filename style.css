@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
 :root {
+  --initial-background: #173b58;
+  --initial-color: #005ca5;
   --warning-background: #ffcc6e;
   --warning-color: #ff9800;
   --danger-background: #fd7e75;
@@ -26,6 +28,12 @@ html, body {
   transition: all 1s linear;
 }
 
+.wrapper.initial {
+  background: var(--initial-background);
+  color: white;
+  text-shadow: 2px 0 0 var(--initial-color), -2px 0 0 var(--initial-color), 0 2px 0 var(--initial-color), 0 -2px 0 var(--initial-color), 1px 1px var(--initial-color), -1px -1px 0 var(--initial-color), 1px -1px 0 var(--initial-color), -1px 1px 0 var(--initial-color);
+}
+
 .wrapper.warning {
   background: var(--warning-background);
   color: white;
@@ -42,8 +50,7 @@ html, body {
   background: var(--danger-background);
   color: white;
   text-shadow: 2px 0 0 var(--alert-color), -2px 0 0 var(--alert-color), 0 2px 0 var(--alert-color), 0 -2px 0 var(--alert-color), 1px 1px var(--alert-color), -1px -1px 0 var(--alert-color), 1px -1px 0 var(--alert-color), -1px 1px 0 var(--alert-color);
-
-  animation: alert-bg 3s linear infinite;
+  animation: alert-bg 4s linear infinite;
 }
 
 @keyframes alert-bg {

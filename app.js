@@ -41,35 +41,38 @@ const printHour = ( hour ) => {
   setColor( hour );
 }
 
-const runInterval = () => {
-  setInterval(() => currentTime(), 1000);
-}
-
 const setColor = ( hour ) => {
-  if (hour[2] >= '00' && hour[2] < 30) {
-    return wrapper.classList.remove('warning', 'danger', 'alert');
+  const seconds = Number( hour[2] );
+
+  if (seconds >= 0 && seconds < 30) {
+    wrapper.classList.remove('warning', 'danger', 'alert');
+    return wrapper.classList.add('initial');
   }
 
-  if (hour[2] >= '30' && hour[2] < 40) {
+  if (seconds >= 30 && seconds < 40) {
     if (wrapper.classList.value.includes('warning')) return;
-    wrapper.classList.remove('danger', 'alert');
+    wrapper.classList.remove('initial', 'danger', 'alert');
     return wrapper.classList.add('warning');
   }
 
-  if (hour[2] >= '40' && hour[2] < 50) {
+  if (seconds >= 40 && seconds < 50) {
     if (wrapper.classList.value.includes('danger')) return;
-    wrapper.classList.remove('warning', 'alert');
+    wrapper.classList.remove('initial', 'warning', 'alert');
     return wrapper.classList.add('danger');
   }
 
-  if (hour[2] >= '50') {
+  if (seconds >= 50) {
     if (wrapper.classList.value.includes('alert')) return;
 
-    wrapper.classList.remove('warning', 'danger');
+    wrapper.classList.remove('initial', 'warning', 'danger');
     return wrapper.classList.add('alert');
   }
 }
 
+
+const runInterval = () => {
+  setInterval(() => currentTime(), 1000);
+}
 
 /**APP INITIALIZATION */
 init();
