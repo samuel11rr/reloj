@@ -1,4 +1,5 @@
 const wrapper = document.querySelector('.wrapper');
+const main = document.querySelector('.main');
 const hoursContainer = document.querySelector('#hours');
 const minutesContainer = document.querySelector('#minutes');
 const secondsContainer = document.querySelector('#seconds');
@@ -38,35 +39,41 @@ const printHour = ( hour ) => {
     hoursContainer.innerText = hour[0];
   }
 
-  setColor( hour );
+  setColor( hour.map( number => Number(number) ) );
 }
 
-const setColor = ( hour ) => {
-  const seconds = Number( hour[2] );
+const warningTime = '23:48:00';
+const dangerTime = '23:49:00';
+const alertTime = '23:50:00';
+const warningTimeArray = warningTime.split(':').map( number => Number( number ) );
+const dangerTimeArray = dangerTime.split(':').map( number => Number( number ) );
+const alertTimeArray = alertTime.split(':').map( number => Number( number ) );
 
-  if (seconds >= 0 && seconds < 30) {
-    wrapper.classList.remove('warning', 'danger', 'alert');
-    return wrapper.classList.add('initial');
+const setColor = ( currentTime ) => {
+  if ( itsTime(currentTime, warningTimeArray, dangerTimeArray) ) {
+    if (main.classList.value.includes('warning')) return;
+    main.classList.remove('initial', 'danger', 'alert');
+    return main.classList.add('warning');
   }
 
-  if (seconds >= 30 && seconds < 40) {
-    if (wrapper.classList.value.includes('warning')) return;
-    wrapper.classList.remove('initial', 'danger', 'alert');
-    return wrapper.classList.add('warning');
+  if ( itsTime(currentTime, dangerTimeArray, alertTimeArray) ) {
+    if (main.classList.value.includes('danger')) return;
+    main.classList.remove('initial', 'warning', 'alert');
+    return main.classList.add('danger');
   }
 
-  if (seconds >= 40 && seconds < 50) {
-    if (wrapper.classList.value.includes('danger')) return;
-    wrapper.classList.remove('initial', 'warning', 'alert');
-    return wrapper.classList.add('danger');
+  if ( itsTime(currentTime, alertTimeArray) ) {
+    if (main.classList.value.includes('alert')) return;
+    main.classList.remove('initial', 'warning', 'danger');
+    return main.classList.add('alert');
   }
+}
 
-  if (seconds >= 50) {
-    if (wrapper.classList.value.includes('alert')) return;
-
-    wrapper.classList.remove('initial', 'warning', 'danger');
-    return wrapper.classList.add('alert');
-  }
+const itsTime = ( currentTime, limitTime, overTime = null ) => {
+  return !!overTime 
+    ? ((currentTime[0] >= limitTime[0] && currentTime[1] >= limitTime [1]) 
+      && (currentTime[0] <= overTime[0] && currentTime[1] < overTime[1])) 
+    : (currentTime[0] >= limitTime[0] && currentTime[1] >= limitTime [1]);
 }
 
 
