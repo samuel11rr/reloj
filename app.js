@@ -13,11 +13,14 @@ const showSeconds = document.querySelector('#show-seconds');
 
 
 const init = () => {
-  const milliseconds = new Date().toString();
-  const timeout = Number( milliseconds.substr(-3) );
   uiSettings();
 
-  setTimeout(() => runInterval(), timeout);
+  setTimeout(() => runInterval(), millisecondsTimeout());
+}
+
+const millisecondsTimeout = () => {
+  const milliseconds = new Date().toString();
+  return Number( milliseconds.substr(-3) );
 }
 
 const currentTime = () => {
@@ -121,9 +124,15 @@ settingsButton.addEventListener('click', () => toggleSettings(true) );
 closeSettingsButton.addEventListener('click', () => toggleSettings(false) );
 
 showSeconds.addEventListener('click', () => {
-  if ( showSeconds.checked ) {
+  if ( showSeconds.checked ) {    
+    timeSeparators[0].style.display = 'none';
+
+    setTimeout(() => {
+      timeSeparators[0].style.display = 'block';
+      timeSeparators[1].style.display = 'block';
+    }, millisecondsTimeout() );
+
     secondsContainer.style.display = 'block';
-    timeSeparators[1].style.display = 'block';
   } else {
     secondsContainer.style.display = 'none';
     timeSeparators[1].style.display = 'none';
