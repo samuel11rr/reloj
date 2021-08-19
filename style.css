@@ -31,6 +31,7 @@ html, body {
   font-family: 'Anton', sans-serif;
   font-size: 14rem;
   transition: all 1s linear;
+  user-select: none;
 }
 
 .main.initial {
@@ -97,6 +98,12 @@ html, body {
   font-size: 1rem;
   color: white;
   text-align: end;
+  user-select: none;
+}
+
+.icons {
+  transition: 0.2s;
+  user-select: none;
 }
 
 .icon {
@@ -109,15 +116,42 @@ html, body {
   border-radius: 50%;
   cursor: pointer;
   transition: 0.4s;
+  opacity: 0.3;
 }
 
 .icon:hover{
   background-color: rgba(255, 255, 255, 0.3);
+  opacity: 1;
 }
 
+.settings-container {
+  display: none;
+  transition: 0.2s;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.settings-container div {
+  margin-right: 20px;
+}
+
+.checkbox {
+  cursor: pointer;
+}
+.checkbox input{
+  cursor: pointer;
+}
+
+/* Icons */
 .icon#full-screen-on {
   background-image: url('icons/arrow-expand.png');
 }
 .icon#full-screen-off {
   background-image: url('icons/fullscreen-exit.png');
+}
+.icon#settings {
+  background-image: url('icons/cog.png');
+}
+.icon#close-settings {
+  background-image: url('icons/close-thick.png');
 }
