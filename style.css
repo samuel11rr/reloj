@@ -89,15 +89,35 @@ html, body {
 }
 
 .toolbar {
-  /* TODO: change display to block */
-  display: none;
   position: absolute;
   top: 0;
-  /* TODO: remove 2px and border */
-  width: calc(100% - 42px);
-  border: 1px solid red;
+  width: calc(100% - 40px);
   padding: 20px;
   font-family: sans-serif;
   font-size: 1rem;
   color: white;
+  text-align: end;
+}
+
+.icon {
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.icon:hover{
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.icon#full-screen-on {
+  background-image: url('icons/arrow-expand.png');
+}
+.icon#full-screen-off {
+  background-image: url('icons/fullscreen-exit.png');
 }

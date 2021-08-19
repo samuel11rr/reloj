@@ -81,5 +81,19 @@ const runInterval = () => {
   setInterval(() => currentTime(), 1000);
 }
 
+const fullScreenButton = document.querySelector('#full-screen-on');
+
+fullScreenButton.addEventListener('click', () => {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    fullScreenButton.id = 'full-screen-off';
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+      fullScreenButton.id = 'full-screen-on';
+    }
+  }
+});
+
 /**APP INITIALIZATION */
 init();
