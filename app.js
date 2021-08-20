@@ -1,5 +1,6 @@
 const wrapper = document.querySelector('.wrapper');
 const main = document.querySelector('.main');
+const metaTheme = document.head.getElementsByTagName('meta')['theme-color'];
 const hoursContainer = document.querySelector('#hours');
 const minutesContainer = document.querySelector('#minutes');
 const secondsContainer = document.querySelector('#seconds');
@@ -14,6 +15,7 @@ const showSeconds = document.querySelector('#show-seconds');
 
 const init = () => {
   uiSettings();
+  if ( !!navigator.wakeLock ) screenLockOn();
 
   setTimeout(() => runInterval(), millisecondsTimeout());
 }
@@ -54,9 +56,9 @@ const printHour = ( hour ) => {
   setColor( hour.map( number => Number(number) ) );
 }
 
-const warningTime = '10:30:00';
-const dangerTime = '10:35:00';
-const alertTime = '10:40:00';
+const warningTime = '20:03:00';
+const dangerTime = '20:04:00';
+const alertTime = '20:05:00';
 const warningTimeArray = warningTime.split(':').map( number => Number( number ) );
 const dangerTimeArray = dangerTime.split(':').map( number => Number( number ) );
 const alertTimeArray = alertTime.split(':').map( number => Number( number ) );
@@ -65,19 +67,22 @@ const setColor = ( currentTime ) => {
   if ( itsTime(currentTime, warningTimeArray, dangerTimeArray) ) {
     if (main.classList.value.includes('warning')) return;
     main.classList.remove('initial', 'danger', 'alert');
-    return main.classList.add('warning');
+    main.classList.add('warning');
+    return setTimeout(() =>  metaTheme.content = '#ffcc6e', 1000);
   }
 
   if ( itsTime(currentTime, dangerTimeArray, alertTimeArray) ) {
     if (main.classList.value.includes('danger')) return;
     main.classList.remove('initial', 'warning', 'alert');
-    return main.classList.add('danger');
+    main.classList.add('danger');
+    return setTimeout(() =>  metaTheme.content = '#fd7e75', 1000);
   }
 
   if ( itsTime(currentTime, alertTimeArray) ) {
     if (main.classList.value.includes('alert')) return;
     main.classList.remove('initial', 'warning', 'danger');
-    return main.classList.add('alert');
+    main.classList.add('alert');
+    return setTimeout(() =>  metaTheme.content = '#f44336', 1000);
   }
 }
 
@@ -96,6 +101,13 @@ const uiSettings = () => {
   if ( !document.documentElement.requestFullscreen && !document.exitFullscreen ) {
     fullScreenButton.style.display = 'none';
   }
+
+  hideSeconds();
+}
+
+const hideSeconds = () => {
+  secondsContainer.style.display = 'none';
+  timeSeparators[1].style.display = 'none';
 }
 
 fullScreenButton.addEventListener('click', () => {
@@ -124,20 +136,45 @@ settingsButton.addEventListener('click', () => toggleSettings(true) );
 closeSettingsButton.addEventListener('click', () => toggleSettings(false) );
 
 showSeconds.addEventListener('click', () => {
-  if ( showSeconds.checked ) {    
-    timeSeparators[0].style.display = 'none';
+  if ( !showSeconds.checked ) return hideSeconds();
 
-    setTimeout(() => {
-      timeSeparators[0].style.display = 'block';
-      timeSeparators[1].style.display = 'block';
-    }, millisecondsTimeout() );
+  timeSeparators[0].style.display = 'none';
 
-    secondsContainer.style.display = 'block';
-  } else {
-    secondsContainer.style.display = 'none';
-    timeSeparators[1].style.display = 'none';
-  }
+  setTimeout(() => {
+    timeSeparators[0].style.display = 'block';
+    timeSeparators[1].style.display = 'block';
+  }, millisecondsTimeout() );
+
+  secondsContainer.style.display = 'block';
 })
+
+let screenLock;
+
+const screenLockOn = async () => {
+  try {
+    screenLock = await navigator.wakeLock.request('screen');
+    console.log('screen locked on init');
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const screenLockOff = async () => {
+  if ( !screenLock ) return;
+
+  await screenLock.release();
+  screenLock = null;
+  console.log('screen released');
+}
+
+document.addEventListener('visibilitychange', async () => {
+  if (screenLock !== undefined && document.visibilityState === 'visible') {
+    screenLock = await navigator.wakeLock.request('screen');
+    console.log('screen locked on visibility change');
+  } else {
+    screenLockOff();
+  }
+});
 
 
 /**APP INITIALIZATION */
