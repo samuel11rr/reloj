@@ -12,10 +12,16 @@ const iconsContainer = document.querySelector('.icons');
 const settingContainer = document.querySelector('.settings-container');
 const showSeconds = document.querySelector('#show-seconds');
 
+const settings = {
+  showSeconds: false,
+  warningTime: null,
+  dangerTime: null,
+  finalTime: null
+}
 
 const init = () => {
   uiSettings();
-  if ( !!navigator.wakeLock ) screenLockOn();
+  screenLockOn();
 
   setTimeout(() => runInterval(), millisecondsTimeout());
 }
@@ -151,6 +157,8 @@ showSeconds.addEventListener('click', () => {
 let screenLock;
 
 const screenLockOn = async () => {
+  if ( !navigator.wakeLock ) return;
+
   try {
     screenLock = await navigator.wakeLock.request('screen');
     console.log('screen locked on init');
@@ -168,12 +176,9 @@ const screenLockOff = async () => {
 }
 
 document.addEventListener('visibilitychange', async () => {
-  if (screenLock !== undefined && document.visibilityState === 'visible') {
-    screenLock = await navigator.wakeLock.request('screen');
-    console.log('screen locked on visibility change');
-  } else {
-    screenLockOff();
-  }
+  return screenLock !== undefined && document.visibilityState === 'visible'
+    ? screenLockOn()
+    : screenLockOff();
 });
 
 

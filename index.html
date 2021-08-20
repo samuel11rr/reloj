@@ -19,13 +19,35 @@
       </div>
 
       <div class="settings-container">
-        <div>
-          <label class="checkbox">
-            Segundos
-            <input type="checkbox" id="show-seconds">
-          </label>
+        <div class="settings-panel">
+          <div class="column">
+            <div class="input input-hour">
+              <label for="warning-time"> Alerta amarilla </label>
+              <input type="time" id="warning-time" name="warning-time" min="00:00" max="23:59">
+            </div>
+  
+            <div class="input input-hour">
+              <label for="danger-time"> Alerta roja </label>
+              <input type="time" id="danger-time" name="danger-time" min="00:00" max="23:59">
+            </div>
+  
+            <div class="input input-hour">
+              <label for="final-time"> Hora final </label>
+              <input type="time" id="final-time" name="final-time" min="00:00" max="23:59">
+  
+              <span> Guardar </span>
+              <span> Cancelar </span>
+            </div>
+          </div>
 
-          <!-- TODO: time limiters -->
+          <div class="column">
+            <div class="input input-checkbox">
+              <label class="checkbox">
+                Ver segundos
+                <input type="checkbox" id="show-seconds">
+              </label>
+            </div>
+          </div>
         </div>
 
         <i class="icon" id="close-settings"></i>
