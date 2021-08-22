@@ -62,9 +62,9 @@ const printHour = ( hour ) => {
   setColor( hour.map( number => Number(number) ) );
 }
 
-const warningTime = '20:03:00';
-const dangerTime = '20:04:00';
-const alertTime = '20:05:00';
+const warningTime = '10:30:00';
+const dangerTime = '10:35:00';
+const alertTime = '10:40:00';
 const warningTimeArray = warningTime.split(':').map( number => Number( number ) );
 const dangerTimeArray = dangerTime.split(':').map( number => Number( number ) );
 const alertTimeArray = alertTime.split(':').map( number => Number( number ) );
@@ -152,7 +152,7 @@ showSeconds.addEventListener('click', () => {
   }, millisecondsTimeout() );
 
   secondsContainer.style.display = 'block';
-})
+});
 
 let screenLock;
 
@@ -161,7 +161,7 @@ const screenLockOn = async () => {
 
   try {
     screenLock = await navigator.wakeLock.request('screen');
-    console.log('screen locked on init');
+    console.log('screen locked');
   } catch (error) {
     console.log(error);
   }
@@ -181,6 +181,8 @@ document.addEventListener('visibilitychange', async () => {
     : screenLockOff();
 });
 
+window.addEventListener('focus', () => screenLockOn());
+window.addEventListener('blur', () => screenLockOff());
 
 /**APP INITIALIZATION */
 init();
